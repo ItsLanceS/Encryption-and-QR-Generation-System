@@ -30,8 +30,8 @@ This project serves as the **final requirement for the Programming course (CSCC3
 
 ### 🔑 Login System
 ![Login Screenshot]
-![image](https://github.com/user-attachments/assets/77d8807c-8fc8-4df0-9797-11c18d5a23dd) ![image](https://github.com/user-attachments/assets/90a07f02-5408-4530-afa0-63a76a5edc7b)
-
+![image](https://github.com/user-attachments/assets/77d8807c-8fc8-4df0-9797-11c18d5a23dd) 
+![image](https://github.com/user-attachments/assets/90a07f02-5408-4530-afa0-63a76a5edc7b)
 
 ### 🏛 Caesar Cipher
 ![Caesar Cipher Screenshot]
