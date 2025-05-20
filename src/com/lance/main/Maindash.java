@@ -17,7 +17,8 @@ import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-
+import com.lance.component.Header;
+import com.lance.component.ProfileDash;
 /**
  *
  * @author RAVEN
@@ -37,6 +38,8 @@ public class Maindash extends javax.swing.JFrame {
 
     public Maindash() {
         initComponents();
+        
+        setIconImage(new ImageIcon(getClass().getResource("/com/lance/icon/logo.png")).getImage());
         setBackground(new Color(0, 0, 0, 0));
         home = new Form_Home();
         form1 = new Form_1();
@@ -58,7 +61,7 @@ public class Maindash extends javax.swing.JFrame {
                     setForm(form3);
                 } else if (index == 4) {
                     setForm(form4);
-                } else if (index == 9) {
+                } else if (index == 11) {
             int result = javax.swing.JOptionPane.showConfirmDialog(
                 Maindash.this,
                 "Do you want to log out?",
@@ -74,12 +77,23 @@ public class Maindash extends javax.swing.JFrame {
                 // Optional: redirect to login screen if available
                 
                 login.setVisible(true);
-            }
-        }
+            } 
+        }  
     }
 });
+        
+        header2.getPicComponent().addMouseListener(new java.awt.event.MouseAdapter() {
+    @Override
+    public void mouseClicked(java.awt.event.MouseEvent evt) {
+        setForm(new ProfileDash());
+    }
+    
+    
+});
+        
         //  set when system open start with home form
         setForm(new Form_Home());
+        
         
         
         
@@ -88,7 +102,7 @@ public class Maindash extends javax.swing.JFrame {
     
 
 
-    private void setForm(JComponent com) {
+    public void setForm(JComponent com) {
         mainPanel.removeAll();
         mainPanel.add(com);
         mainPanel.repaint();

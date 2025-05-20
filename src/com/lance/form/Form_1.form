@@ -21,15 +21,10 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-          </Group>
           <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="encryptButton" min="-2" max="-2" attributes="0"/>
@@ -37,21 +32,32 @@
                               <Component id="decryptButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="dropZoneLabel" max="32767" attributes="0"/>
-                          <Component id="passwordField" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="filePathField" min="-2" pref="165" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="passwordField" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="filePathField" alignment="0" pref="165" max="32767" attributes="0"/>
+                              </Group>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="browseButton" min="-2" pref="79" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="showButton" max="32767" attributes="0"/>
+                                  <Component id="browseButton" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
-                          <Component id="previewLabel" min="-2" pref="250" max="-2" attributes="0"/>
+                          <Component id="previewLabel" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="330" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="408" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                  </Group>
               </Group>
-              <EmptySpace pref="408" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -72,13 +78,16 @@
                   <Component id="browseButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="passwordField" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="passwordField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="showButton" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="encryptButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="decryptButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="63" max="32767" attributes="0"/>
+              <EmptySpace pref="62" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -87,7 +96,7 @@
     <Component class="javax.swing.JLabel" name="dropZoneLabel">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="\ud83d\udcc4 Drop your file here" containsInvalidXMLChars="true"/>
+        <Property name="text" type="java.lang.String" value="Drop your file here"/>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="new DropTarget(dropZoneLabel, new DropTargetAdapter() {&#xa;    @Override&#xa;    public void dragEnter(DropTargetDragEvent dtde) {&#xa;        dropZoneLabel.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));&#xa;    }&#xa;&#xa;    @Override&#xa;    public void dragExit(DropTargetEvent dte) {&#xa;        dropZoneLabel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));&#xa;    }&#xa;&#xa;    @Override&#xa;    public void drop(DropTargetDropEvent dtde) {&#xa;        dropZoneLabel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));&#xa;        try {&#xa;            dtde.acceptDrop(DnDConstants.ACTION_COPY);&#xa;            java.util.List&lt;File&gt; droppedFiles = (java.util.List&lt;File&gt;) dtde.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);&#xa;            if (!droppedFiles.isEmpty()) {&#xa;                selectedFile = droppedFiles.get(0);&#xa;                filePathField.setText(selectedFile.getAbsolutePath());&#xa;&#xa;                // Check if it&apos;s an image&#xa;                if (selectedFile.getName().matches(&quot;.*\\.(jpg|jpeg|png|gif|bmp|)$&quot;)) {&#xa;                    ImageIcon icon = new ImageIcon(selectedFile.getAbsolutePath());&#xa;                    Image scaledImage = icon.getImage().getScaledInstance(previewLabel.getWidth(), previewLabel.getHeight(), Image.SCALE_SMOOTH);&#xa;                    previewLabel.setIcon(new ImageIcon(scaledImage));&#xa;                } else {&#xa;                    previewLabel.setIcon(new ImageIcon(getClass().getResource(&quot;com/lance/icon/folder.png&quot;)));&#xa;                }&#xa;            }&#xa;        } catch (Exception ex) {&#xa;            ex.printStackTrace();&#xa;        }&#xa;    }&#xa;});"/>
@@ -126,9 +135,6 @@
       </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="passwordField">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jPasswordField1"/>
-      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passwordFieldActionPerformed"/>
       </Events>
@@ -167,6 +173,14 @@
         </Property>
         <Property name="text" type="java.lang.String" value="By: QRCipher"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="showButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="ShowPassword"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="showButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

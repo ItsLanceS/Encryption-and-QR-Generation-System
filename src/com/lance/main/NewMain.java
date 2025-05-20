@@ -5,6 +5,7 @@
 package com.lance.main;
 
 import com.formdev.flatlaf.FlatLightLaf;
+import java.awt.RenderingHints;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -19,6 +20,8 @@ public class NewMain {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+       
         try {
     UIManager.setLookAndFeel( new FlatLightLaf() );
 } catch( UnsupportedLookAndFeelException ex ) {

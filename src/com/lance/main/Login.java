@@ -5,12 +5,14 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import javax.swing.ImageIcon;
 
 public class Login extends javax.swing.JFrame {
     
   
     public Login() {
         initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/com/lance/icon/logo.png")).getImage());
         slide.setFram(Login.this);
        
         

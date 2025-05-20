@@ -119,7 +119,7 @@ public class PanelSlide extends javax.swing.JLayeredPane {
         loading.addEventContinue(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                Menu menu = new Menu();
+                Header menu = new Header();
                 Maindash Dash = new Maindash();
                 menu.setData(loading.getData());
                 Dash.setVisible(true);

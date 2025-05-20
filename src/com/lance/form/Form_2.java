@@ -84,12 +84,49 @@ BufferedImage qrImage;
     lblQRCode.setOpaque(true);
     lblQRCode.setBackground(new Color(255, 255, 255, 230)); // Slight transparency
     setOpaque(false);
-       color1 = Color.decode("#FFE47A");
-        color2 = Color.decode("#3D7EAA"); 
+       color1 = Color.decode("#2193b0");
+        color2 = Color.decode("#f2fcfe"); 
         
        
 
     }
+    
+    public BufferedImage createRoundedQRCode(BitMatrix matrix, int size, Color onColor) {
+    int matrixWidth = matrix.getWidth();
+    int matrixHeight = matrix.getHeight();
+    
+    BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+    Graphics2D g2d = image.createGraphics();
+
+    g2d.setColor(Color.WHITE);  // background white
+    g2d.fillRect(0, 0, size, size);
+
+    g2d.setColor(onColor);
+    g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+    // Calculate size of one module (dot)
+    float moduleSize = (float) size / matrixWidth;
+
+    // Draw rounded dots
+    for (int y = 0; y < matrixHeight; y++) {
+        for (int x = 0; x < matrixWidth; x++) {
+            if (matrix.get(x, y)) {
+                float cx = x * moduleSize;
+                float cy = y * moduleSize;
+                // Draw a filled oval (circle) for each 'on' bit
+                g2d.fillOval(
+                    Math.round(cx),
+                    Math.round(cy),
+                    Math.round(moduleSize),
+                    Math.round(moduleSize));
+            }
+        }
+    }
+
+    g2d.dispose();
+    return image;
+}
+
     
     public Color getColor1() {
         return color1;
@@ -114,41 +151,81 @@ BufferedImage qrImage;
     
 public BufferedImage generateQRCodeImage(String text) throws WriterException {
     int size = 250;
+    int moduleCount = 33;  // typical QR size, but get from BitMatrix dynamically
+    int dotDiameter  = 14;
 
-    // Set error correction level to H (High)
+    // Set error correction to high
     Map<EncodeHintType, Object> hints = new HashMap<>();
     hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 
     BitMatrix bitMatrix = new MultiFormatWriter().encode(text, BarcodeFormat.QR_CODE, size, size, hints);
-    BufferedImage qrImage = MatrixToImageWriter.toBufferedImage(bitMatrix);
 
+    int matrixWidth = bitMatrix.getWidth();
+    int matrixHeight = bitMatrix.getHeight();
+
+    // Calculate module size (pixel size per bit)
+    float moduleSizeX = (float)size / matrixWidth;
+    float moduleSizeY = (float)size / matrixHeight;
+
+    // We'll use the smaller of the two for a circle diameter
+    dotDiameter = (int)Math.ceil(Math.min(moduleSizeX, moduleSizeY));
+
+    BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+    Graphics2D g = image.createGraphics();
+
+    // White background
+    g.setColor(Color.WHITE);
+    g.fillRect(0, 0, size, size);
+
+    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    g.setColor(Color.BLUE);
+
+    // Draw rounded dots centered in each module square
+    for (int y = 0; y < matrixHeight; y++) {
+        for (int x = 0; x < matrixWidth; x++) {
+            if (bitMatrix.get(x, y)) {
+                // Calculate top-left corner to center the circle in module square
+                float px = x * moduleSizeX;
+                float py = y * moduleSizeY;
+
+                // Offset to center circle inside module square
+                float offsetX = (moduleSizeX - dotDiameter) / 2f;
+                float offsetY = (moduleSizeY - dotDiameter) / 2f;
+
+                g.fillOval(Math.round(px + offsetX), Math.round(py + offsetY), dotDiameter, dotDiameter);
+            }
+        }
+    }
+    g.dispose();
+
+    // Logo embedding code (same as before)
     if (logoImage != null) {
-        // Resize logo to be ~20% of QR code
         int logoSize = size / 5;
         Image scaledLogo = logoImage.getScaledInstance(logoSize, logoSize, Image.SCALE_SMOOTH);
 
-        // Create white background for logo
         BufferedImage logoWithBackground = new BufferedImage(logoSize, logoSize, BufferedImage.TYPE_INT_ARGB);
         Graphics2D gLogo = logoWithBackground.createGraphics();
         gLogo.setColor(Color.WHITE);
-        gLogo.fillRoundRect(0, 0, logoSize, logoSize, 10, 10); // Rounded white box
+        gLogo.fillRoundRect(0, 0, logoSize, logoSize, 10, 10);
         gLogo.drawImage(scaledLogo, 0, 0, null);
         gLogo.dispose();
 
-        // Draw both QR and logo
         BufferedImage combined = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = combined.createGraphics();
-        g.drawImage(qrImage, 0, 0, null);
+        Graphics2D gCombined = combined.createGraphics();
+        gCombined.drawImage(image, 0, 0, null);
         int centerX = (size - logoSize) / 2;
         int centerY = (size - logoSize) / 2;
-        g.drawImage(logoWithBackground, centerX, centerY, null);
-        g.dispose();
+        gCombined.drawImage(logoWithBackground, centerX, centerY, null);
+        gCombined.dispose();
 
         return combined;
     }
 
-    return qrImage;
+    return image;
 }
+
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -229,25 +306,26 @@ public BufferedImage generateQRCodeImage(String text) throws WriterException {
                         .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(lblTip, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnGenerate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblQRCode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtField, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)
-                                .addComponent(btnUploadLogo)))))
+                        .addComponent(jLabel3)))
                 .addContainerGap(299, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(lblTip, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnGenerate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblQRCode, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtField, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnUploadLogo)))
+                .addGap(225, 225, 225))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,7 +334,7 @@ public BufferedImage generateQRCodeImage(String text) throws WriterException {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -270,7 +348,7 @@ public BufferedImage generateQRCodeImage(String text) throws WriterException {
                 .addComponent(btnGenerate)
                 .addGap(18, 18, 18)
                 .addComponent(btnSave)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -294,35 +372,57 @@ public BufferedImage generateQRCodeImage(String text) throws WriterException {
 
     private void btnGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateActionPerformed
         // TODO add your handling code here:
-        String text = txtField.getText().trim();
-    if (text.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please enter text to generate QR code.");
-       
+     String text = txtField.getText();
+    if (text == null || text.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter some text.", "Input Required", JOptionPane.WARNING_MESSAGE);
         return;
     }
+
     try {
         qrImage = generateQRCodeImage(text);
         lblQRCode.setIcon(new ImageIcon(qrImage));
     } catch (WriterException e) {
-        JOptionPane.showMessageDialog(this, "Error generating QR Code.");
+        JOptionPane.showMessageDialog(this, "Failed to generate QR code: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
+
     }//GEN-LAST:event_btnGenerateActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         // TODO add your handling code here:
-        if (qrImage == null) {
-        JOptionPane.showMessageDialog(this, "Generate a QR code first.");
+       if (qrImage == null) {
+        JOptionPane.showMessageDialog(this, "No QR code to save. Generate one first.", "Save Error", JOptionPane.WARNING_MESSAGE);
         return;
     }
 
     JFileChooser fileChooser = new JFileChooser();
-    if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-        File file = fileChooser.getSelectedFile();
+    fileChooser.setDialogTitle("Save QR Code");
+    fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("PNG Image (*.png)", "png"));
+
+    int userSelection = fileChooser.showSaveDialog(this);
+
+    if (userSelection == JFileChooser.APPROVE_OPTION) {
+        File fileToSave = fileChooser.getSelectedFile();
+
+        // Force .png extension
+        String path = fileToSave.getAbsolutePath();
+        if (!path.toLowerCase().endsWith(".png")) {
+            path += ".png";
+            fileToSave = new File(path);
+        }
+
+        // Optional: Prevent saving over existing file without confirmation
+        if (fileToSave.exists()) {
+            int result = JOptionPane.showConfirmDialog(this, "File already exists. Overwrite?", "Confirm Save", JOptionPane.YES_NO_OPTION);
+            if (result != JOptionPane.YES_OPTION) {
+                return;
+            }
+        }
+
         try {
-            ImageIO.write(qrImage, "png", file);
-            JOptionPane.showMessageDialog(this, "QR Code saved successfully.");
+            ImageIO.write(qrImage, "PNG", fileToSave);
+            JOptionPane.showMessageDialog(this, "QR code saved successfully!", "Saved", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Failed to save QR code.");
+            JOptionPane.showMessageDialog(this, "Failed to save QR code: " + e.getMessage(), "Save Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     }//GEN-LAST:event_btnSaveActionPerformed
@@ -330,14 +430,17 @@ public BufferedImage generateQRCodeImage(String text) throws WriterException {
     private void btnUploadLogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUploadLogoActionPerformed
         // TODO add your handling code here:
         
-            JFileChooser fileChooser = new JFileChooser();
-    if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-        File file = fileChooser.getSelectedFile();
+        JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Choose a logo image");
+    int userSelection = fileChooser.showOpenDialog(this);
+
+    if (userSelection == JFileChooser.APPROVE_OPTION) {
+        File selectedFile = fileChooser.getSelectedFile();
         try {
-            logoImage = ImageIO.read(file);
-            JOptionPane.showMessageDialog(this, "Logo uploaded successfully.");
+            logoImage = ImageIO.read(selectedFile);
+            JOptionPane.showMessageDialog(this, "Logo uploaded successfully!");
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Failed to upload logo.");
+            JOptionPane.showMessageDialog(this, "Failed to load logo: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
