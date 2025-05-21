@@ -5,6 +5,17 @@
 package com.lance.component;
 
 import com.lance.form.Form_Home;
+import com.lance.main.Login;
+import com.lance.main.Maindash;
+import com.lance.model.Model_Card;
+import com.lance.model.UserStats;
+import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 
 /**
@@ -19,13 +30,37 @@ public class ProfileDash extends javax.swing.JPanel {
      * Creates new form ProfileDash
      */
     public ProfileDash() {
-        
         initComponents();
+        String totalEncrypt = UserStats.getEncryptCount();
+        String totalQR = UserStats.getQRCount();
+                
+       card1.setData(new Model_Card(new ImageIcon(getClass().getResource("/com/lance/icon/data-encryption (1).png")), "Total Files and Text Encrypt", totalEncrypt, "By: QRCipher"));
+        card2.setData(new Model_Card(new ImageIcon(getClass().getResource("/com/lance/icon/qr (1).png")), "Total QR Generated", totalQR, "By: QRCipher"));
         
-        
+        setOpaque(false);
+        color1 = Color.decode("#000046");
+        color2 = Color.decode("#1CB5E0"); 
     }
     
-    
+    public Color getColor1() {
+        return color1;
+    }
+
+    public void setColor1(Color color1) {
+        this.color1 = color1;
+    }
+
+    public Color getColor2() {
+        return color2;
+    }
+
+    public void setColor2(Color color2) {
+        this.color2 = color2;
+    }
+
+    private Color color1;
+    private Color color2;
+     
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -37,8 +72,9 @@ public class ProfileDash extends javax.swing.JPanel {
     private void initComponents() {
 
         pic = new com.lance.swing.ImageAvatar();
-        cmdContinue = new com.lance.swing.Button();
-        cmdCancel1 = new com.lance.swing.Button();
+        Logout2 = new com.lance.swing.Button();
+        card1 = new com.lance.component.Card();
+        card2 = new com.lance.component.Card();
 
         pic.setBackground(new java.awt.Color(67, 99, 132));
         pic.setForeground(new java.awt.Color(188, 188, 188));
@@ -51,70 +87,88 @@ public class ProfileDash extends javax.swing.JPanel {
             }
         });
 
-        cmdContinue.setBackground(new java.awt.Color(88, 130, 172));
-        cmdContinue.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        cmdContinue.setForeground(new java.awt.Color(255, 255, 255));
-        cmdContinue.setText("Continue");
-        cmdContinue.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        cmdContinue.addActionListener(new java.awt.event.ActionListener() {
+        Logout2.setBackground(new java.awt.Color(67, 99, 132));
+        Logout2.setForeground(new java.awt.Color(255, 255, 255));
+        Logout2.setText("Logout");
+        Logout2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdContinueActionPerformed(evt);
+                Logout2ActionPerformed(evt);
             }
         });
 
-        cmdCancel1.setBackground(new java.awt.Color(67, 99, 132));
-        cmdCancel1.setForeground(new java.awt.Color(255, 255, 255));
-        cmdCancel1.setText("Logout");
-        cmdCancel1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdCancel1ActionPerformed(evt);
-            }
-        });
+        card1.setColor1(new java.awt.Color(0, 102, 255));
+        card1.setColor2(new java.awt.Color(204, 204, 204));
+
+        card2.setColor1(new java.awt.Color(255, 102, 0));
+        card2.setColor2(new java.awt.Color(204, 204, 204));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(pic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(351, 351, 351)
-                                .addComponent(cmdContinue, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(403, 403, 403)
-                                .addComponent(cmdCancel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 348, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(pic, javax.swing.GroupLayout.DEFAULT_SIZE, 903, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Logout2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(card1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(card2, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(46, 46, 46))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(pic, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74)
-                .addComponent(cmdContinue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(cmdCancel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(186, Short.MAX_VALUE))
+                .addGap(64, 64, 64)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(card1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(card2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addComponent(Logout2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cmdContinueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdContinueActionPerformed
+    private void Logout2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Logout2ActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_cmdContinueActionPerformed
-
-    private void cmdCancel1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCancel1ActionPerformed
-        // TODO add your handling code here:
-        
-        
-    }//GEN-LAST:event_cmdCancel1ActionPerformed
-
+               Login login = new Login();
+               Maindash frameMain = new Maindash();
+     int result = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "Do you want to log out?",
+            "Logout Confirmation",
+            javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.QUESTION_MESSAGE
+    );
+     if (result == javax.swing.JOptionPane.YES_OPTION) {
+                // Close the dashboard
+                frameMain.setVisible(false);
+                frameMain.dispose();
+                // Optional: redirect to login screen if available
+                  
+                login.setVisible(true);
+            }     
+    }//GEN-LAST:event_Logout2ActionPerformed
+    @Override
+    protected void paintComponent(Graphics grphcs) {
+        Graphics2D g2 = (Graphics2D) grphcs;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        GradientPaint g = new GradientPaint(0, 0, color1, 0, getHeight(), color2);
+        g2.setPaint(g);
+        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 15, 15);
+        g2.setColor(new Color(255, 255, 255, 50));
+        g2.fillOval(getWidth() - (getHeight() / 2), 10, getHeight(), getHeight());
+        g2.fillOval(getWidth() - (getHeight() / 2) - 20, getHeight() / 2 + 20, getHeight(), getHeight());
+        super.paintComponent(grphcs);
+    }
     private void picMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_picMouseClicked
         // TODO add your handling code here:
         
@@ -123,8 +177,9 @@ public class ProfileDash extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.lance.swing.Button cmdCancel1;
-    private com.lance.swing.Button cmdContinue;
+    private com.lance.swing.Button Logout2;
+    private com.lance.component.Card card1;
+    private com.lance.component.Card card2;
     private com.lance.swing.ImageAvatar pic;
     // End of variables declaration//GEN-END:variables
 }

@@ -8,6 +8,7 @@ import com.google.zxing.*;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import com.lance.model.UserStats;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GradientPaint;
@@ -372,6 +373,7 @@ public BufferedImage generateQRCodeImage(String text) throws WriterException {
 
     private void btnGenerateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateActionPerformed
         // TODO add your handling code here:
+        
      String text = txtField.getText();
     if (text == null || text.trim().isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please enter some text.", "Input Required", JOptionPane.WARNING_MESSAGE);
@@ -381,6 +383,7 @@ public BufferedImage generateQRCodeImage(String text) throws WriterException {
     try {
         qrImage = generateQRCodeImage(text);
         lblQRCode.setIcon(new ImageIcon(qrImage));
+        UserStats.incrementQR();
     } catch (WriterException e) {
         JOptionPane.showMessageDialog(this, "Failed to generate QR code: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }

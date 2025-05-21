@@ -12,10 +12,15 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class Header extends javax.swing.JPanel {
-
+    
+    public JLabel label;
+    
     public Header() {
+        
+        this.label = jLabel4;
         initComponents();
         setOpaque(false);
     }
@@ -27,7 +32,10 @@ public class Header extends javax.swing.JPanel {
     public com.lance.swing.ImageAvatar getPicComponent() {
     return pic;
 }
-   
+    
+   public JLabel getLabel(){
+       return jLabel4;
+   }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -123,6 +131,9 @@ public class Header extends javax.swing.JPanel {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jLabel4MouseExited(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel4MousePressed(evt);
+            }
         });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -205,6 +216,8 @@ public class Header extends javax.swing.JPanel {
         // TODO add your handling code here:
 
         
+        
+        
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
@@ -239,6 +252,11 @@ public class Header extends javax.swing.JPanel {
         lbUser1.setBackground(Color.WHITE);
     }//GEN-LAST:event_picMouseExited
 
+    private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
+        // TODO add your handling code here:
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/lance/icon/minimize (2).png"))); 
+    }//GEN-LAST:event_jLabel4MousePressed
+
     
     @Override
     protected void paintComponent(Graphics grphcs) {
@@ -255,7 +273,7 @@ public class Header extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    public javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lbUser;
     private javax.swing.JLabel lbUser1;
     private com.lance.swing.ImageAvatar pic;

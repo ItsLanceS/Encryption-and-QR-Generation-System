@@ -33,6 +33,10 @@ public class PanelLogin extends javax.swing.JPanel {
     
     public PanelLogin() {
         initComponents();
+        
+        txtPass.setEchoChar('\u2022');   
+        jLabel7.setVisible(true);
+        jLabel8.setVisible(false);
         setOpaque(false);
         color1 = Color.orange;
         color2 = Color.white;
@@ -50,7 +54,8 @@ public class PanelLogin extends javax.swing.JPanel {
         cmd = new com.lance.swing.Button();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
 
         jLabel3.setText("jLabel3");
@@ -59,20 +64,26 @@ public class PanelLogin extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(51, 51, 51));
         setForeground(new java.awt.Color(51, 255, 255));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtUser.setLabelText("User Name");
+        add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 129, 290, -1));
 
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 30)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(79, 79, 79));
         jLabel1.setText("Sign In");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
 
         txtPass.setLabelText("Password");
+        add(txtPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 250, -1));
 
         cmd.setBackground(new java.awt.Color(25, 182, 247));
         cmd.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         cmd.setForeground(new java.awt.Color(255, 255, 255));
         cmd.setText("Login");
         cmd.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
+        add(cmd, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 309, 290, -1));
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(326, 16, -1, -1));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/lance/icon/cross.png"))); // NOI18N
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -86,84 +97,27 @@ public class PanelLogin extends javax.swing.JPanel {
                 jLabel4MouseExited(evt);
             }
         });
+        add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 10, -1, 28));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/lance/icon/eye (1).png"))); // NOI18N
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/lance/icon/hidden.png"))); // NOI18N
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel6MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel6MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel6MouseExited(evt);
+                jLabel7MouseClicked(evt);
             }
         });
+        add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 210, -1, 40));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(7, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/lance/icon/eye (3).png"))); // NOI18N
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
+        add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 210, -1, 40));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cmd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtPass, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel4)
-                .addGap(25, 25, 25))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jLabel2)))
-                .addGap(50, 50, 50)
-                .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(50, 50, 50)
-                .addComponent(cmd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(128, Short.MAX_VALUE))
-        );
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel6.setOpaque(true);
+        add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 200, 40, 60));
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
@@ -181,21 +135,20 @@ public class PanelLogin extends javax.swing.JPanel {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/lance/icon/cross.png")));
     }//GEN-LAST:event_jLabel4MouseExited
 
-    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         // TODO add your handling code here:
-        boolean showing = txtPass.getEchoChar() == (char)0;
-        txtPass.setEchoChar(showing ? '●' : (char)0);
-    }//GEN-LAST:event_jLabel6MouseClicked
+        txtPass.setEchoChar((char) 0);
+        jLabel7.setVisible(false);
+        jLabel8.setVisible(true);
+       
+    }//GEN-LAST:event_jLabel7MouseClicked
 
-    private void jLabel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseEntered
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
         // TODO add your handling code here:
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/lance/icon/eye (2).png"))); 
-    }//GEN-LAST:event_jLabel6MouseEntered
-
-    private void jLabel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseExited
-        // TODO add your handling code here:
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/lance/icon/eye (1).png"))); 
-    }//GEN-LAST:event_jLabel6MouseExited
+        txtPass.setEchoChar('\u2022');
+        jLabel7.setVisible(true);
+        jLabel8.setVisible(false);
+    }//GEN-LAST:event_jLabel8MouseClicked
 
     
     @Override
@@ -246,7 +199,8 @@ public class PanelLogin extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private com.lance.swing.PasswordField txtPass;
     private com.lance.swing.TextField txtUser;
     // End of variables declaration//GEN-END:variables

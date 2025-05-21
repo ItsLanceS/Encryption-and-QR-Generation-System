@@ -31,7 +31,6 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="decryptButton" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="dropZoneLabel" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                   <Component id="passwordField" alignment="0" max="32767" attributes="0"/>
@@ -43,7 +42,7 @@
                                   <Component id="browseButton" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <Component id="previewLabel" alignment="0" max="32767" attributes="0"/>
+                          <Component id="dropZoneLabel" alignment="0" pref="283" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="330" max="-2" attributes="0"/>
                   </Group>
@@ -68,11 +67,9 @@
               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="dropZoneLabel" min="-2" pref="81" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="previewLabel" min="-2" pref="200" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+              <Component id="dropZoneLabel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="filePathField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="browseButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -96,27 +93,17 @@
     <Component class="javax.swing.JLabel" name="dropZoneLabel">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/com/lance/icon/data-encryption (1).png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Drop your file here"/>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[250, 250]"/>
+        </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="new DropTarget(dropZoneLabel, new DropTargetAdapter() {&#xa;    @Override&#xa;    public void dragEnter(DropTargetDragEvent dtde) {&#xa;        dropZoneLabel.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));&#xa;    }&#xa;&#xa;    @Override&#xa;    public void dragExit(DropTargetEvent dte) {&#xa;        dropZoneLabel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));&#xa;    }&#xa;&#xa;    @Override&#xa;    public void drop(DropTargetDropEvent dtde) {&#xa;        dropZoneLabel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));&#xa;        try {&#xa;            dtde.acceptDrop(DnDConstants.ACTION_COPY);&#xa;            java.util.List&lt;File&gt; droppedFiles = (java.util.List&lt;File&gt;) dtde.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);&#xa;            if (!droppedFiles.isEmpty()) {&#xa;                selectedFile = droppedFiles.get(0);&#xa;                filePathField.setText(selectedFile.getAbsolutePath());&#xa;&#xa;                // Check if it&apos;s an image&#xa;                if (selectedFile.getName().matches(&quot;.*\\.(jpg|jpeg|png|gif|bmp|)$&quot;)) {&#xa;                    ImageIcon icon = new ImageIcon(selectedFile.getAbsolutePath());&#xa;                    Image scaledImage = icon.getImage().getScaledInstance(previewLabel.getWidth(), previewLabel.getHeight(), Image.SCALE_SMOOTH);&#xa;                    previewLabel.setIcon(new ImageIcon(scaledImage));&#xa;                } else {&#xa;                    previewLabel.setIcon(new ImageIcon(getClass().getResource(&quot;com/lance/icon/folder.png&quot;)));&#xa;                }&#xa;            }&#xa;        } catch (Exception ex) {&#xa;            ex.printStackTrace();&#xa;        }&#xa;    }&#xa;});"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="new DropTarget(dropZoneLabel, new DropTargetAdapter() {&#xa;    @Override&#xa;    public void dragEnter(DropTargetDragEvent dtde) {&#xa;        dropZoneLabel.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));&#xa;    }&#xa;&#xa;    @Override&#xa;    public void dragExit(DropTargetEvent dte) {&#xa;        dropZoneLabel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));&#xa;    }&#xa;&#xa;    @Override&#xa;    public void drop(DropTargetDropEvent dtde) {&#xa;        dropZoneLabel.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));&#xa;        try {&#xa;            dtde.acceptDrop(DnDConstants.ACTION_COPY);&#xa;            java.util.List&lt;File&gt; droppedFiles = (java.util.List&lt;File&gt;) dtde.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);&#xa;            if (!droppedFiles.isEmpty()) {&#xa;                selectedFile = droppedFiles.get(0);&#xa;                filePathField.setText(selectedFile.getAbsolutePath());&#xa;&#xa;                // Check if it&apos;s an image&#xa;               &#xa;            }&#xa;        } catch (Exception ex) {&#xa;            ex.printStackTrace();&#xa;        }&#xa;    }&#xa;});"/>
       </AuxValues>
-    </Component>
-    <Component class="javax.swing.JLabel" name="previewLabel">
-      <Properties>
-        <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/com/lance/icon/folder.png"/>
-        </Property>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-            <LineBorder thickness="3"/>
-          </Border>
-        </Property>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[150, 150]"/>
-        </Property>
-      </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="filePathField">
       <Properties>

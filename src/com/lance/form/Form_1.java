@@ -6,6 +6,7 @@
 package com.lance.form;
 
 import com.lance.model.AESUtil;
+import com.lance.model.UserStats;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -102,7 +103,6 @@ private File selectedFile;
     private void initComponents() {
 
         dropZoneLabel = new javax.swing.JLabel();
-        previewLabel = new javax.swing.JLabel();
         filePathField = new javax.swing.JTextField();
         browseButton = new javax.swing.JButton();
         passwordField = new javax.swing.JPasswordField();
@@ -115,7 +115,9 @@ private File selectedFile;
         setBackground(new java.awt.Color(242, 242, 242));
 
         dropZoneLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dropZoneLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/lance/icon/data-encryption (1).png"))); // NOI18N
         dropZoneLabel.setText("Drop your file here");
+        dropZoneLabel.setPreferredSize(new java.awt.Dimension(250, 250));
         new DropTarget(dropZoneLabel, new DropTargetAdapter() {
             @Override
             public void dragEnter(DropTargetDragEvent dtde) {
@@ -138,24 +140,13 @@ private File selectedFile;
                         filePathField.setText(selectedFile.getAbsolutePath());
 
                         // Check if it's an image
-                        if (selectedFile.getName().matches(".*\\.(jpg|jpeg|png|gif|bmp|)$")) {
-                            ImageIcon icon = new ImageIcon(selectedFile.getAbsolutePath());
-                            Image scaledImage = icon.getImage().getScaledInstance(previewLabel.getWidth(), previewLabel.getHeight(), Image.SCALE_SMOOTH);
-                            previewLabel.setIcon(new ImageIcon(scaledImage));
-                        } else {
-                            previewLabel.setIcon(new ImageIcon(getClass().getResource("com/lance/icon/folder.png")));
-                        }
+
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
         });
-
-        previewLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        previewLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/lance/icon/folder.png"))); // NOI18N
-        previewLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        previewLabel.setPreferredSize(new java.awt.Dimension(150, 150));
 
         filePathField.setEditable(false);
         filePathField.addActionListener(new java.awt.event.ActionListener() {
@@ -218,7 +209,6 @@ private File selectedFile;
                                 .addComponent(encryptButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(decryptButton))
-                            .addComponent(dropZoneLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(passwordField, javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,7 +217,7 @@ private File selectedFile;
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(showButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(browseButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(previewLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(dropZoneLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE))
                         .addGap(330, 330, 330))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
@@ -244,11 +234,9 @@ private File selectedFile;
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(dropZoneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(previewLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(43, 43, 43)
+                .addComponent(dropZoneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(filePathField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(browseButton))
@@ -298,6 +286,7 @@ private File selectedFile;
 
     private void encryptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encryptButtonActionPerformed
         // TODO add your handling code here:
+        UserStats.incrementEncrypt();
         if (selectedFile == null || !selectedFile.exists()) {
     JOptionPane.showMessageDialog(this, "Please select a valid file.");
     return;
@@ -361,7 +350,6 @@ try {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField passwordField;
-    private javax.swing.JLabel previewLabel;
     private javax.swing.JButton showButton;
     // End of variables declaration//GEN-END:variables
 }

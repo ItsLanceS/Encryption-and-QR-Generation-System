@@ -94,11 +94,21 @@ public class Maindash extends javax.swing.JFrame {
         //  set when system open start with home form
         setForm(new Form_Home());
         
-        
+        header2.getLabel().addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+             
+                  
+                
+                setState(ICONIFIED);
+           }
+            
+        });
         
         
 
     }
+    
     
 
 
