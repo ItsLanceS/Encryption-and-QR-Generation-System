@@ -10,7 +10,7 @@ This project serves as the **final requirement for the Programming course (CSCC3
 
 - 🔐 **Login System** – Ensures that only authorized users can access the application.
 - 🏛 **Caesar Cipher Tool** – Encode and decode text using the Caesar Cipher encryption technique.
-- 📁 **File Encryption & Decryption** – Encrypt or decrypt plain text files easily within the app.
+- 📁 **File Encryption & Decryption** – Encrypt or decrypt files easily within the app using **AES (Advance Encryption Standard).**
 - 📷 **QR Code Generator** – Convert any string into a scannable QR code image using ZXing.
 
 ---
